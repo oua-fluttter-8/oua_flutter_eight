@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:oua_flutter_eight/presentation/screens/splash/splash_screen.dart';
 
 import 'firebase_options.dart';
@@ -17,7 +18,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return   MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: Scaffold(
       //   body: Center(
@@ -30,6 +31,7 @@ class MainApp extends StatelessWidget {
       //     ),
       //   ),
       // ),
+      home: SplashScreen(),
     );
   }
 }

@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 class SplashTextWidget extends StatelessWidget {
@@ -7,12 +9,18 @@ class SplashTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'Splash Screen',
-      style: TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-      ),
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+    
+        Text(
+          'Splash Screen',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }
