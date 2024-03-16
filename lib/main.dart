@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:oua_flutter_eight/presentation/screens/splash/splash_screen.dart';
 
 import 'firebase_options.dart';
 
@@ -16,19 +17,19 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image(image: AssetImage('assets/png/Logo-Test.png')),
-              Text('Hello World'),
-            ],
-          ),
-        ),
-      ),
+      // home: Scaffold(
+      //   body: Center(
+      //     child: Column(
+      //       mainAxisAlignment: MainAxisAlignment.center,
+      //       children: [
+      //         Image(image: AssetImage('assets')),
+      //         Text('Hello World'),
+      //       ],
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
