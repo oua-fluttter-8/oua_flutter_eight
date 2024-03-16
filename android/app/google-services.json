@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1044621035923",
+    "project_id": "travel-app-oua",
+    "storage_bucket": "travel-app-oua.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044621035923:android:0e36b2bf428ef978e34066",
+        "android_client_info": {
+          "package_name": "com.example.oua_flutter_eight"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQgzLLlWhP2KOXVOI5y47M1Js3EnrpB4Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
