@@ -67,18 +67,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
     final userState = context.watch<UserBloc>().state;
     if (userState is UserFetchedState) {
-      if (userState.user != null) {
-        user = userState.user!;
-      } else {
-        user = UserModel(uid: " ", email: " ", nameSurname: " ");
-      }
+      user = userState.user!;
+      nameSurnameController.text = user.nameSurname;
+      locationController.text = user.location ?? "";
     } else if (userState is UserFetchLoadingState) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     } else if (userState is UserFetchErrorState) {
     } else if (userState is UserInitialState) {
       context.read<UserBloc>().add(UserFetchEvent(userId: userId));
+    } else {
+      user = UserModel(uid: "", nameSurname: "", email: "");
     }
-    nameSurnameController.text = user.nameSurname;
-    locationController.text = user.location ?? "";
 
     return Scaffold(
       appBar: AppBar(
