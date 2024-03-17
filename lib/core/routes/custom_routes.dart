@@ -4,7 +4,7 @@ import 'package:oua_flutter_eight/presentation/screens/profile/profile_page.dart
 import 'package:oua_flutter_eight/presentation/screens/sign/sign_in_page.dart';
 import 'package:oua_flutter_eight/presentation/screens/sign/sign_up_page.dart';
 import 'package:oua_flutter_eight/presentation/screens/splash/splash_screen.dart';
-
+import '../../presentation/screens/profile/edit_profile_page.dart';
 import '../constants/route_constants.dart';
 
 class CustomRoutes {
@@ -33,6 +33,10 @@ class CustomRoutes {
       case profileRoute:
         return MaterialPageRoute(
           builder: (_) => const ProfilePage(),
+        );
+      case editProfileRoute:
+        return MaterialPageRoute(
+          builder: (_) => const EditProfilePage(),
         );
       default:
         return MaterialPageRoute(

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:oua_flutter_eight/logic/blocs/auth/auth_bloc.dart';
 import 'package:oua_flutter_eight/logic/blocs/user/user_bloc.dart';
 import 'package:oua_flutter_eight/logic/blocs/user/user_state.dart';
 import 'package:oua_flutter_eight/models/user_model.dart';
 import 'package:oua_flutter_eight/presentation/widgets/profile/profile_item_widget.dart';
+
+import '../../../logic/blocs/auth/auth_state.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -16,13 +19,16 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    UserModel user;
-    final userState = context.watch<UserBloc>().state;
-    if (userState is UserFetchedState) {
-      user = userState.user!;
-    } else {
-      Navigator.pushReplacementNamed(context, "/sign_in");
-      user = UserModel(uid: "", email: "", nameSurname: "");
+    UserModel? userProfile;
+    final userBlocState = context.watch<UserBloc>().state;
+
+    if (userBlocState is UserFetchedState) {
+      userProfile = userBlocState.user!;
+    }
+    if (userProfile == null) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
     }
     return Scaffold(
       body: SafeArea(
@@ -45,19 +51,22 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(height: 40),
                     CircleAvatar(
                       radius: 48,
-                      backgroundImage: NetworkImage(user.profilePhotoUrl ??
+                      backgroundImage: NetworkImage(userProfile
+                              .profilePhotoUrl ??
                           "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"),
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      user.nameSurname == "" ? "Hata" : user.nameSurname,
+                      userProfile.nameSurname == ""
+                          ? "Hata"
+                          : userProfile.nameSurname,
                       style: const TextStyle(
                         fontSize: 28,
                       ),
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      user.email == "" ? "Hata" : user.email,
+                      userProfile.email == "" ? "Hata" : userProfile.email,
                       style: const TextStyle(
                         fontSize: 16,
                       ),
@@ -151,24 +160,34 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    const Items(
+                    Items(
+                        onTap: () {
+                          Navigator.pushNamed(context, "/edit_profile",
+                              arguments: userProfile);
+                        },
                         title: " Profil Bilgilerim",
                         iconData: FontAwesomeIcons.user),
                     const SizedBox(height: 10),
-                    const Items(
+                    Items(
+                        onTap: () {},
                         title: " Listelerim",
                         iconData: FontAwesomeIcons.bookmark),
                     const SizedBox(height: 10),
-                    const Items(
-                        title: " Listelerim", iconData: FontAwesomeIcons.map),
+                    Items(
+                        onTap: () {},
+                        title: " Listelerim",
+                        iconData: FontAwesomeIcons.map),
                     const SizedBox(height: 10),
-                    const Items(
-                        title: " Ayarlar", iconData: FontAwesomeIcons.cog),
+                    Items(
+                        onTap: () {},
+                        title: " Ayarlar",
+                        iconData: FontAwesomeIcons.gear),
                     const SizedBox(height: 10),
-                    const Items(
-                        title: " Yardım", iconData: FontAwesomeIcons.globe),
+                    Items(
+                        onTap: () {},
+                        title: " Yardım",
+                        iconData: FontAwesomeIcons.globe),
                     const SizedBox(height: 40),
-
                   ],
                 ),
               ),

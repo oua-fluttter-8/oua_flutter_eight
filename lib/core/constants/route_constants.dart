@@ -3,3 +3,4 @@ const String signInRoute = '/sign_in';
 const String signUpRoute = '/sign_up';
 const String splashRoute = '/splash';
 const String profileRoute = '/profile';
+const String editProfileRoute = '/edit_profile';

@@ -1,83 +1,152 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:oua_flutter_eight/logic/blocs/auth/auth_state.dart';
+import 'package:oua_flutter_eight/logic/blocs/user/user_bloc.dart';
+import 'package:oua_flutter_eight/logic/blocs/user/user_event.dart';
+import 'package:oua_flutter_eight/logic/blocs/user/user_state.dart';
+import 'package:oua_flutter_eight/models/user_model.dart';
+import 'package:oua_flutter_eight/presentation/widgets/profile/custom_circle_avatar.dart';
 import 'package:oua_flutter_eight/presentation/widgets/profile/profile_textfield_widget.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+import '../../../logic/blocs/auth/auth_bloc.dart';
+
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({super.key});
+  const EditProfilePage({
+    super.key,
+  });
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  TextEditingController nameSurnameController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+  File profilePictureUrl = File("");
+  String profilePictureUrlString = "";
+  late String userId;
+  late UserModel user;
+
+  Future<void> pickImage(String url) async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      setState(() {
+        profilePictureUrl = File(pickedImage.path);
+      });
+
+      await uploadImage(url); // uploadImage metodunun tamamlanmasını bekleyin
+    } else {
+      // Resim seçilmediğinde yapılacak işlemler
+    }
+  }
+
+  Future<void> uploadImage(String uid) async {
+    try {
+      FirebaseStorage storage = FirebaseStorage.instance;
+      Reference ref = storage.ref().child('profilePhoto/$uid/image.png');
+      UploadTask uploadTask = ref.putFile(profilePictureUrl);
+      await uploadTask;
+      profilePictureUrlString = await ref.getDownloadURL();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final authState = context.watch<AuthBloc>().state;
+    if (authState is Authenticated) {
+      userId = authState.userId!;
+    } else {
+      userId = "";
+    }
+    final userState = context.watch<UserBloc>().state;
+    if (userState is UserFetchedState) {
+      if (userState.user != null) {
+        user = userState.user!;
+      } else {
+        user = UserModel(uid: " ", email: " ", nameSurname: " ");
+      }
+    } else if (userState is UserFetchLoadingState) {
+    } else if (userState is UserFetchErrorState) {
+    } else if (userState is UserInitialState) {
+      context.read<UserBloc>().add(UserFetchEvent(userId: userId));
+    }
+    nameSurnameController.text = user.nameSurname;
+    locationController.text = user.location ?? "";
+
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Profil Bilgileri"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.read<UserBloc>().add(UserUpdateEvent(
+                  userId: user.uid,
+                  userProfile: UserModel(
+                    uid: user.uid,
+                    email: user.email,
+                    nameSurname: nameSurnameController.text,
+                    location: locationController.text,
+                    profilePhotoUrl: profilePictureUrlString == ""
+                        ? user.profilePhotoUrl
+                        : profilePictureUrlString,
+                  )));
+            },
+            icon: const Icon(Icons.save),
+          ),
+        ],
+      ),
       body: SafeArea(
+        bottom: true,
+        top: false,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Center(
-
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Icon(
-                        Icons.arrow_back,
-                        // Burada gerekli boyutlar ve diğer stillendirmeleri yapabilirsiniz
-                      ),
-                      const SizedBox(width: 8.0), // Ok ile yazı arasında boşluk bırakmak için
-                      const Text(
-                        "Profil Ayarları",
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 30),
+                    CustomCircleAvatar(
+                      radius: 80,
+                      pickedImage: profilePictureUrl,
+                      userPhotoUrl: user.profilePhotoUrl ?? "",
+                    ),
+                    const SizedBox(height: 20),
+                    TextButton(
+                      onPressed: () {
+                        pickImage(user.uid);
+                      },
+                      child: Text(
+                        "Profil resmini değiştir",
                         style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-
-                      Text(
-                        " Done",
-                        style: TextStyle(
-                          fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: Colors.orange.shade500,// Örneğin mavi renk kullanıldı, isteğinize göre değiştirebilirsiniz
+                          fontSize: 16,
+                          color: Colors.orange.shade500,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 30),
+                    ProfileTextField_widgets(
+                      title: "Ad Soyad",
+                      controller: nameSurnameController,
+                    ),
+                    const SizedBox(height: 20),
+                    ProfileTextField_widgets(
+                      title: "Konum",
+                      controller: locationController,
+                    ),
+                    const SizedBox(height: 190),
+                  ],
                 ),
-
-                  const SizedBox(height: 30),
-                  const CircleAvatar(
-                    radius: 48,
-                    backgroundColor: Colors.black,
-                  ),
-                  const SizedBox(height: 20),
-                  const Text("Leonardo",
-                    style: TextStyle(
-                      fontSize: 28,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                   Text("Profil resmini değiştir",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                        color: Colors.orange.shade500,
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  const ProfileTextField_widgets(title: "Ad",subtitle: "Leonardo"),
-                  const SizedBox(height: 20),
-                  const ProfileTextField_widgets(title: "Soyad",subtitle: "Aka"),
-                  const SizedBox(height: 20),
-                  const ProfileTextField_widgets(title: "Konum",subtitle: "Türkiye"),
-                  const SizedBox(height: 190),
-
-                ],
               ),
             ),
           ),
@@ -86,5 +155,3 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 }
-
-

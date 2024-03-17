@@ -34,4 +34,16 @@ class UserRepository {
       return e;
     }
   }
+
+  Future<void> updateUser(UserModel userProfile, String uid) async {
+    try {
+      await collectionReference.doc(uid).update(userProfile.toFirestore());
+    } catch (e) {
+      if (e is FirebaseException) {
+        String errorMessage = FirestoreExceptionHelper.handleException(e.code);
+        throw Exception(errorMessage);
+      }
+      throw Exception(e);
+    }
+  }
 }
