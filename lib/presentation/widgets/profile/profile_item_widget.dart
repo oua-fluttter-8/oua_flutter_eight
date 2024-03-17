@@ -34,6 +34,7 @@ class Items extends StatelessWidget {
         leading: Icon(iconData ,size: 24,color: Colors.grey,),
         trailing: const Icon(FontAwesomeIcons.chevronRight,color: Colors.grey,),
         tileColor: Colors.grey.shade50,
-      ),);
+      ),
+    );
   }
 }

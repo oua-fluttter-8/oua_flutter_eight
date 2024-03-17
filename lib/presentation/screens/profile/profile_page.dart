@@ -168,6 +168,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     const Items(
                         title: " Yardım", iconData: FontAwesomeIcons.globe),
                     const SizedBox(height: 40),
+
                   ],
                 ),
               ),
