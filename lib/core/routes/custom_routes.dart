@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oua_flutter_eight/presentation/screens/home/home_screen.dart';
+import 'package:oua_flutter_eight/presentation/screens/profile/profile_page.dart';
 import 'package:oua_flutter_eight/presentation/screens/sign/sign_in_page.dart';
 import 'package:oua_flutter_eight/presentation/screens/sign/sign_up_page.dart';
 import 'package:oua_flutter_eight/presentation/screens/splash/splash_screen.dart';
@@ -25,7 +26,13 @@ class CustomRoutes {
         );
       case homeRoute:
         return MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
+          builder: (_) => HomeScreen(
+            userId: args as String,
+          ),
+        );
+      case profileRoute:
+        return MaterialPageRoute(
+          builder: (_) => const ProfilePage(),
         );
       default:
         return MaterialPageRoute(

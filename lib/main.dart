@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oua_flutter_eight/core/routes/custom_routes.dart';
 import 'package:oua_flutter_eight/logic/blocs/auth/auth_bloc.dart';
+import 'package:oua_flutter_eight/logic/blocs/user/user_bloc.dart';
 import 'package:oua_flutter_eight/logic/repositories/auth_repository.dart';
 import 'package:oua_flutter_eight/logic/repositories/user_repository.dart';
 import 'package:oua_flutter_eight/presentation/screens/auth_controller/auth_controller.dart';
@@ -19,6 +20,7 @@ void main() async {
       providers: [
         BlocProvider(
             create: (context) => AuthBloc(AuthRepository(), UserRepository())),
+        BlocProvider(create: (context) => UserBloc(UserRepository())),
       ],
       child: const MainApp(),
     ),
