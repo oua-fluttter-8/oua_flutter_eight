@@ -6,7 +6,6 @@ import 'package:oua_flutter_eight/logic/blocs/auth/auth_bloc.dart';
 import 'package:oua_flutter_eight/logic/repositories/auth_repository.dart';
 import 'package:oua_flutter_eight/logic/repositories/user_repository.dart';
 import 'package:oua_flutter_eight/presentation/screens/auth_controller/auth_controller.dart';
-import 'package:oua_flutter_eight/presentation/screens/splash/splash_screen.dart';
 
 import 'firebase_options.dart';
 
