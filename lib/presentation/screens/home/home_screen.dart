@@ -6,6 +6,7 @@ import 'package:oua_flutter_eight/logic/blocs/auth/auth_state.dart';
 import 'package:oua_flutter_eight/logic/blocs/user/user_bloc.dart';
 import 'package:oua_flutter_eight/logic/blocs/user/user_event.dart';
 import 'package:oua_flutter_eight/presentation/screens/ayarlar_ekrani/ayarlar_ekrani.dart';
+import 'package:oua_flutter_eight/presentation/screens/home/location_test.dart';
 import 'package:oua_flutter_eight/presentation/screens/lokasyon/lokasyon_screen.dart';
 
 import '../../../logic/blocs/user/user_state.dart';
@@ -102,6 +103,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             builder: (context) => const AyarlarEkrani()));
                   },
                   child: const Text("Ayarlar"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LocationTest()));
+                  },
+                  child: const Text("Lokasyon"),
                 ),
               ],
             );
