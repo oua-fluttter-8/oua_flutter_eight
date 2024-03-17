@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class OnboardingScreenDesignPage extends StatefulWidget {
   const OnboardingScreenDesignPage({super.key});
@@ -117,8 +115,7 @@ class OnboardEkraniGeriButonuWidget extends StatelessWidget {
             );
           },
           style: ButtonStyle(
-            backgroundColor:
-                MaterialStatePropertyAll(Colors.grey[300]),
+            backgroundColor: MaterialStatePropertyAll(Colors.grey[300]),
             iconColor: const MaterialStatePropertyAll(Colors.black),
           ),
           child: const Icon(Icons.arrow_back),
@@ -151,8 +148,7 @@ class OnboardEkraniIleriButonuWidget extends StatelessWidget {
             );
           },
           style: ButtonStyle(
-            backgroundColor:
-                MaterialStatePropertyAll(Colors.grey[300]),
+            backgroundColor: MaterialStatePropertyAll(Colors.grey[300]),
             iconColor: const MaterialStatePropertyAll(Colors.black),
           ),
           child: const Icon(Icons.arrow_forward),

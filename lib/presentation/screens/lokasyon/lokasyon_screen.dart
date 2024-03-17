@@ -1,9 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'dart:math';
-
-import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LokasyonScreen extends StatefulWidget {
   const LokasyonScreen({super.key});
@@ -49,13 +45,27 @@ class _LokasyonScreenState extends State<LokasyonScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Lokasyon Detay Ekranı"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              //Favoriye ekleme işlemleri
+            },
+            icon: const Icon(FontAwesomeIcons.heart),
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           children: [
             // görsel ve ikonların yer aldığı bölüm
             LokasyonDetayEkraniUstKisim(lokasyonListesi: lokasyonListesi),
             //TabBar ve Şehir isminin bulunduğu alt bölüm
-            LokasyonDetayEkraniAltKisim(lokasyonListesi: lokasyonListesi, tabController: _tabController, resimListesi: resimListesi),
+            LokasyonDetayEkraniAltKisim(
+                lokasyonListesi: lokasyonListesi,
+                tabController: _tabController,
+                resimListesi: resimListesi),
           ],
         ),
       ),
@@ -73,56 +83,11 @@ class LokasyonDetayEkraniUstKisim extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Image.asset(
-          lokasyonListesi[0].image,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 2,
-          fit: BoxFit.cover,
-        ),
-        Positioned(
-          top: MediaQuery.of(context).size.height / 10,
-          right: MediaQuery.of(context).size.width / 10,
-          child: Container(
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.transparent,
-            ),
-            child: IconButton(
-              onPressed: () {
-                //Favoriye ekleme işlemleri
-              },
-              icon: const Icon(
-                Icons.favorite_outline,
-                size: 30,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          top: MediaQuery.of(context).size.height / 10,
-          left: MediaQuery.of(context).size.width / 10,
-          child: Container(
-            //color: Colors.grey,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.transparent,
-            ),
-            child: IconButton(
-              onPressed: () {
-                // önceki sayfaya geri dönme işlemleri
-              },
-              icon: const Icon(
-                Icons.keyboard_arrow_left,
-                size: 30,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-      ],
+    return Image.asset(
+      lokasyonListesi[0].image,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height / 3,
+      fit: BoxFit.cover,
     );
   }
 }
@@ -149,12 +114,39 @@ class LokasyonDetayEkraniAltKisim extends StatelessWidget {
           Container(
             alignment: Alignment.topLeft,
             padding: const EdgeInsets.all(15),
-            child: Text(
-              lokasyonListesi[0].ad,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  lokasyonListesi[0].ad,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Row(
+                  children: [
+                    Icon(
+                      FontAwesomeIcons.locationDot,
+                      size: 15,
+                    ),
+                    Spacer(),
+                    Text(
+                      "Lokasyon",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Spacer(
+                      flex: 15,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           TabBar(
@@ -194,8 +186,7 @@ class TabBarVideoEkrani extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Text('Video',
-          style: TextStyle(
-              fontSize: 24, fontWeight: FontWeight.bold)),
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
     );
   }
 }
@@ -237,8 +228,7 @@ class TabBarReviewEkrani extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Text('Review',
-          style: TextStyle(
-              fontSize: 24, fontWeight: FontWeight.bold)),
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
     );
   }
 }
@@ -259,8 +249,7 @@ class TabBarAboutEkrani extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(
-              left: 20.0, top: 20, bottom: 10),
+          padding: const EdgeInsets.only(left: 20.0, top: 20, bottom: 10),
           child: Text(
             "Tanıtım",
             style: Theme.of(context)

@@ -5,8 +5,11 @@ import 'package:oua_flutter_eight/logic/blocs/auth/auth_event.dart';
 import 'package:oua_flutter_eight/logic/blocs/auth/auth_state.dart';
 import 'package:oua_flutter_eight/logic/blocs/user/user_bloc.dart';
 import 'package:oua_flutter_eight/logic/blocs/user/user_event.dart';
+import 'package:oua_flutter_eight/presentation/screens/ayarlar_ekrani/ayarlar_ekrani.dart';
+import 'package:oua_flutter_eight/presentation/screens/lokasyon/lokasyon_screen.dart';
 
 import '../../../logic/blocs/user/user_state.dart';
+import '../onboarding_screen_design/onboarding_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String userId;
@@ -67,10 +70,39 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 const Text('Home Screen'),
                 ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, "/profile");
-                    },
-                    child: const Text("Profil"))
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, "/profile");
+                  },
+                  child: const Text("Profil"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const OnboardingScreenDesignPage()));
+                  },
+                  child: const Text("Onboarding"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LokasyonScreen()));
+                  },
+                  child: const Text("Lokasyon"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AyarlarEkrani()));
+                  },
+                  child: const Text("Ayarlar"),
+                ),
               ],
             );
           }

@@ -8,7 +8,6 @@ class AyarlarEkrani extends StatefulWidget {
 }
 
 class _AyarlarEkraniState extends State<AyarlarEkrani> {
-
   final List<ListItem> listItems = [
     ListItem(
       leadingIcon: Icons.notifications_active_outlined,
@@ -39,13 +38,12 @@ class _AyarlarEkraniState extends State<AyarlarEkrani> {
     // ... diğer öğeler için kod ekleyin
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Ayarlar"),
+          title: const Text("Ayarlar"),
         ),
         body: ListView.builder(
           itemCount: listItems.length,
@@ -64,7 +62,6 @@ class _AyarlarEkraniState extends State<AyarlarEkrani> {
     );
   }
 }
-
 
 class ListItem {
   final IconData leadingIcon;
