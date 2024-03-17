@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -243,6 +244,8 @@ class TabBarAboutEkrani extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double ekranYuksekligi = MediaQuery.of(context).size.height;
+    final double ekrangenisligi = MediaQuery.of(context).size.width;
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -259,10 +262,12 @@ class TabBarAboutEkrani extends StatelessWidget {
             //textAlign: TextAlign.left,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 20.0, top: 10),
-          child: Scrollbar(
-            child: Text(lokasyonListesi[0].aciklama),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(left: ekrangenisligi /20, right:ekrangenisligi/20,top: 10, bottom: ekranYuksekligi / 15),
+            child: SingleChildScrollView(
+              child: Text(lokasyonListesi[0].aciklama),
+            ),
           ),
         )
       ],
