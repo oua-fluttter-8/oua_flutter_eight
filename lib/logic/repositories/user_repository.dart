@@ -4,7 +4,7 @@ import 'package:oua_flutter_eight/models/user_model.dart';
 import '../../core/error/firestore_error_handling.dart';
 
 class UserRepository {
-   final CollectionReference collectionReference =
+  final CollectionReference collectionReference =
       FirebaseFirestore.instance.collection("users");
 
   Future<void> createUser(String email, String uid, String nameSurname) async {
@@ -18,6 +18,20 @@ class UserRepository {
         throw Exception(errorMessage);
       }
       throw Exception(e);
+    }
+  }
+
+  Future<Object> fetchUser(String uid) async {
+    try {
+      final userProfileDb = await collectionReference.doc(uid).get();
+      final userProfile = UserModel.fromFirestore(userProfileDb);
+      return userProfile;
+    } catch (e) {
+      if (e is FirebaseException) {
+        String errorMessage = FirestoreExceptionHelper.handleException(e.code);
+        return errorMessage;
+      }
+      return e;
     }
   }
 }
