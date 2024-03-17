@@ -15,18 +15,42 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Center(
+
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Profil Ayarları",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Icon(
+                        Icons.arrow_back,
+                        // Burada gerekli boyutlar ve diğer stillendirmeleri yapabilirsiniz
+                      ),
+                      const SizedBox(width: 8.0), // Ok ile yazı arasında boşluk bırakmak için
+                      const Text(
+                        "Profil Ayarları",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+
+                      Text(
+                        "Done",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange.shade500,// Örneğin mavi renk kullanıldı, isteğinize göre değiştirebilirsiniz
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 40),
+                ),
+
+                  const SizedBox(height: 30),
                   const CircleAvatar(
                     radius: 48,
                     backgroundColor: Colors.black,
