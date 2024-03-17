@@ -48,6 +48,7 @@ class ProfileTextField_widgets extends StatelessWidget {
                 ),
                 border: InputBorder.none,
                 hintText: subtitle,
+
               ),
             ),
           ),

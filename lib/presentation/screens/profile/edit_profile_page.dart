@@ -52,6 +52,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   const SizedBox(height: 20),
                   const ProfileTextField_widgets(title: "Konum",subtitle: "Türkiye"),
                   const SizedBox(height: 190),
+
                 ],
               ),
             ),
