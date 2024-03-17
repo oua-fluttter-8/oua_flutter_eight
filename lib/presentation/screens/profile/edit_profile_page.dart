@@ -39,7 +39,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
 
                       Text(
-                        "Done",
+                        " Done",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
