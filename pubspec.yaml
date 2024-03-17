@@ -26,3 +26,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/png/
+    - assets/onboarding_images/
+    - assets/lokasyon_detay_images/mardin/
