@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ProfileTextField_widgets extends StatelessWidget {
+class ProfileTextfieldWidget extends StatelessWidget {
   final String title;
   final TextEditingController controller;
-  const ProfileTextField_widgets({
+  const ProfileTextfieldWidget({
     super.key,
     required this.title,
     required this.controller,

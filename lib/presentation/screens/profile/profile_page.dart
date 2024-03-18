@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:oua_flutter_eight/logic/blocs/auth/auth_bloc.dart';
 import 'package:oua_flutter_eight/logic/blocs/user/user_bloc.dart';
 import 'package:oua_flutter_eight/logic/blocs/user/user_state.dart';
 import 'package:oua_flutter_eight/models/user_model.dart';
 import 'package:oua_flutter_eight/presentation/widgets/profile/profile_item_widget.dart';
-
-import '../../../logic/blocs/auth/auth_state.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

@@ -134,12 +134,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
                     ),
                     const SizedBox(height: 30),
-                    ProfileTextField_widgets(
+                    ProfileTextfieldWidget(
                       title: "Ad Soyad",
                       controller: nameSurnameController,
                     ),
                     const SizedBox(height: 20),
-                    ProfileTextField_widgets(
+                    ProfileTextfieldWidget(
                       title: "Konum",
                       controller: locationController,
                     ),

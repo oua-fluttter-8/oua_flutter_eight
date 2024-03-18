@@ -35,7 +35,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       // home: Scaffold(
       //   body: Center(
@@ -48,8 +48,12 @@ class MainApp extends StatelessWidget {
       //     ),
       //   ),
       // ),
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color(0xfff6f6f6),
+        fontFamily: 'Poppins',
+      ),
       onGenerateRoute: CustomRoutes.generateRoute,
-      home: AuthControlPage(),
+      home: const AuthControlPage(),
     );
   }
 }

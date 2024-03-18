@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -264,7 +263,11 @@ class TabBarAboutEkrani extends StatelessWidget {
         ),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.only(left: ekrangenisligi /20, right:ekrangenisligi/20,top: 10, bottom: ekranYuksekligi / 15),
+            padding: EdgeInsets.only(
+                left: ekrangenisligi / 20,
+                right: ekrangenisligi / 20,
+                top: 10,
+                bottom: ekranYuksekligi / 15),
             child: SingleChildScrollView(
               child: Text(lokasyonListesi[0].aciklama),
             ),

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingScreenDesignPage extends StatefulWidget {
@@ -39,7 +38,7 @@ class _OnboardingScreenDesignPageState
           Expanded(
             child: Stack(children: [
               PageView.builder(
-                itemCount: demo_data.length,
+                itemCount: demoData.length,
                 controller: _pageController,
                 onPageChanged: (index) {
                   // yeni sayfanın index değeri
@@ -48,9 +47,9 @@ class _OnboardingScreenDesignPageState
                   });
                 },
                 itemBuilder: (context, index) => OnboardContent(
-                  image: demo_data[index].image,
-                  title: demo_data[index].title,
-                  description: demo_data[index].description,
+                  image: demoData[index].image,
+                  title: demoData[index].title,
+                  description: demoData[index].description,
                 ),
               ),
               SafeArea(
@@ -73,7 +72,7 @@ class _OnboardingScreenDesignPageState
                 OnboardEkraniGeriButonuWidget(pageController: _pageController),
                 const Spacer(),
                 ...List.generate(
-                  demo_data.length, // oluşturulacak eleman sayısı
+                  demoData.length, // oluşturulacak eleman sayısı
                   (index) => Padding(
                     // her bir elemanın indexisini temsil eder
                     padding: const EdgeInsets.only(right: 4.0),
@@ -195,7 +194,7 @@ class Onboard {
   });
 }
 
-final List<Onboard> demo_data = [
+final List<Onboard> demoData = [
   Onboard(
     image: "assets/onboarding_images/kale_1.jpeg",
     title: "Life is short and the world is wide",
