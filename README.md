@@ -1,7 +1,7 @@
 # oua_flutter_eight
 
 # MEKAN
-
+![MEKAN Logo](assets/svg/logo.svg)
 ![MEKAN Logo](assets/svg/mekAN.svg)
 
 Seyahat tutkunları, hazır olun: Yerel Gezginlerin vazgeçilmezi, Türkiye'nin kültürel ve tarihi zenginliklerini keşfetmek için yeni bir yol!
