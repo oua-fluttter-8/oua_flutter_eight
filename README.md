@@ -1,8 +1,9 @@
 # oua_flutter_eight
 
 # MEKAN
-![MEKAN Logo](assets/svg/logo.svg)
-![MEKAN Logo](assets/svg/mekAN.svg)
+
+
+ <img src="assets/svg/logo.svg" alt="MEKAN Logo" width="200" height="200"> ![MEKAN Logo](assets/svg/mekAN.svg)
 
 Seyahat tutkunları, hazır olun: Yerel Gezginlerin vazgeçilmezi, Türkiye'nin kültürel ve tarihi zenginliklerini keşfetmek için yeni bir yol!
 
