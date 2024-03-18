@@ -60,7 +60,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       onPressed: () {
                         Navigator.pushReplacementNamed(context, "/sign_in");
                       },
-                      child: const Text("Skip")),
+                      child: const Text("Atla")),
                 ),
               )
             ]),

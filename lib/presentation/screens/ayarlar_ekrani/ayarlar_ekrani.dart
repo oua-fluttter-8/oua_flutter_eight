@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oua_flutter_eight/core/components/appbar/custom_app_bar.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -42,8 +43,14 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Ayarlar"),
+        appBar: CustomAppBarWidget(
+          title: "Ayarlar",
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios),
+          ),
         ),
         body: ListView.builder(
           itemCount: listItems.length,

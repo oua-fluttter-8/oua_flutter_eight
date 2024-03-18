@@ -187,7 +187,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           iconData: FontAwesomeIcons.map),
                       const SizedBox(height: 10),
                       Items(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(context, "/settings");
+                          },
                           title: " Ayarlar",
                           iconData: FontAwesomeIcons.gear),
                       const SizedBox(height: 10),
