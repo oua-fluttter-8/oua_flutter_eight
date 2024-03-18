@@ -15,4 +15,16 @@ class UserFetchEvent extends UserEvent {
   UserFetchEvent({required this.userId});
 }
 
+class AddFavoriteLocationEvent extends UserEvent {
+  final String locationId;
+
+  AddFavoriteLocationEvent({required this.locationId});
+}
+
+class DeleteFavoriteLocationEvent extends UserEvent {
+  final String locationId;
+
+  DeleteFavoriteLocationEvent({required this.locationId});
+}
+
 class UserDeleteEvent extends UserEvent {}

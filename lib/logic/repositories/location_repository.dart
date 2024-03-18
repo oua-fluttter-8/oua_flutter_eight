@@ -14,4 +14,21 @@ class LocationRepository {
       throw Exception(e);
     }
   }
+
+  Future<List<LocationModel>> fetchLocationsByCity(String city) async {
+    try {
+      final locationList = await _firestore
+          .collection('locations')
+          .where('locationCity', isEqualTo: city)
+          .get();
+
+      final list = locationList.docs
+          .map((doc) => LocationModel.fromFirestore(doc))
+          .toList();
+
+      return list;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

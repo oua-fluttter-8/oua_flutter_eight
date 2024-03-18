@@ -30,7 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 if (state is AuthError) {
                   ToastHelper.showErrorToast(state.errorMessage);
                 } else if (state is Authenticated) {
-                  Navigator.pushReplacementNamed(context, "/home");
+                  Navigator.pushReplacementNamed(context, "/navbar");
                 }
               },
               child: Column(

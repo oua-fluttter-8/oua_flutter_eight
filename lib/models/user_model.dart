@@ -6,13 +6,16 @@ class UserModel {
   String nameSurname;
   String? profilePhotoUrl;
   String? location;
+  List<String>? favoriteLocations;
 
-  UserModel(
-      {required this.uid,
-      required this.email,
-      required this.nameSurname,
-      this.profilePhotoUrl,
-      this.location});
+  UserModel({
+    required this.uid,
+    required this.email,
+    required this.nameSurname,
+    this.profilePhotoUrl,
+    this.location,
+    this.favoriteLocations,
+  });
 
   Map<String, dynamic> toFirestore() {
     return {
@@ -21,6 +24,7 @@ class UserModel {
       'nameSurname': nameSurname,
       'profilePhotoUrl': profilePhotoUrl ?? "",
       'location': location ?? "",
+      'favoriteLocations': favoriteLocations ?? [],
     };
   }
 
@@ -35,6 +39,7 @@ class UserModel {
       nameSurname: json['nameSurname'],
       email: json['email'],
       location: json['location'],
+      favoriteLocations: List<String>.from(json['favoriteLocations'] ?? []),
     );
   }
 }

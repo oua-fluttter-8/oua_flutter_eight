@@ -1,15 +1,16 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: must_be_immutable
 
-class OnboardingScreenDesignPage extends StatefulWidget {
-  const OnboardingScreenDesignPage({super.key});
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+class OnboardingPage extends StatefulWidget {
+  const OnboardingPage({super.key});
 
   @override
-  State<OnboardingScreenDesignPage> createState() =>
-      _OnboardingScreenDesignPageState();
+  State<OnboardingPage> createState() => _OnboardingPageState();
 }
 
-class _OnboardingScreenDesignPageState
-    extends State<OnboardingScreenDesignPage> {
+class _OnboardingPageState extends State<OnboardingPage> {
   late PageController _pageController;
 
   int _pageIndex = 0;
@@ -48,8 +49,7 @@ class _OnboardingScreenDesignPageState
                 },
                 itemBuilder: (context, index) => OnboardContent(
                   image: demoData[index].image,
-                  title: demoData[index].title,
-                  description: demoData[index].description,
+                  onboardingImage: demoData[index].onboardingImage,
                 ),
               ),
               SafeArea(
@@ -58,7 +58,7 @@ class _OnboardingScreenDesignPageState
                   alignment: Alignment.topRight,
                   child: ElevatedButton(
                       onPressed: () {
-                        //Buraya tıklanınca kayıt ekranına yönlendirilecek
+                        Navigator.pushReplacementNamed(context, "/sign_in");
                       },
                       child: const Text("Skip")),
                 ),
@@ -69,7 +69,10 @@ class _OnboardingScreenDesignPageState
           SafeArea(
             child: Row(
               children: [
-                OnboardEkraniGeriButonuWidget(pageController: _pageController),
+                OnboardEkraniGeriButonuWidget(
+                  pageController: _pageController,
+                  pageIndex: _pageIndex,
+                ),
                 const Spacer(),
                 ...List.generate(
                   demoData.length, // oluşturulacak eleman sayısı
@@ -82,7 +85,8 @@ class _OnboardingScreenDesignPageState
                   ),
                 ),
                 const Spacer(),
-                OnboardEkraniIleriButonuWidget(pageController: _pageController),
+                OnboardEkraniIleriButonuWidget(
+                    pageController: _pageController, pageIndex: _pageIndex),
               ],
             ),
           ),
@@ -96,9 +100,11 @@ class OnboardEkraniGeriButonuWidget extends StatelessWidget {
   const OnboardEkraniGeriButonuWidget({
     super.key,
     required PageController pageController,
+    required this.pageIndex,
   }) : _pageController = pageController;
 
   final PageController _pageController;
+  final int pageIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +113,7 @@ class OnboardEkraniGeriButonuWidget extends StatelessWidget {
       child: SizedBox(
         height: 60,
         width: 60,
-        child: ElevatedButton(
+        child: IconButton(
           onPressed: () {
             _pageController.previousPage(
               curve: Curves.ease,
@@ -118,7 +124,7 @@ class OnboardEkraniGeriButonuWidget extends StatelessWidget {
             backgroundColor: MaterialStatePropertyAll(Colors.grey[300]),
             iconColor: const MaterialStatePropertyAll(Colors.black),
           ),
-          child: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
         ),
       ),
     );
@@ -126,12 +132,14 @@ class OnboardEkraniGeriButonuWidget extends StatelessWidget {
 }
 
 class OnboardEkraniIleriButonuWidget extends StatelessWidget {
-  const OnboardEkraniIleriButonuWidget({
+  OnboardEkraniIleriButonuWidget({
     super.key,
     required PageController pageController,
+    required this.pageIndex,
   }) : _pageController = pageController;
 
   final PageController _pageController;
+  int pageIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -140,18 +148,28 @@ class OnboardEkraniIleriButonuWidget extends StatelessWidget {
       child: SizedBox(
         height: 60,
         width: 60,
-        child: ElevatedButton(
+        child: IconButton(
           onPressed: () {
-            _pageController.nextPage(
-              curve: Curves.ease,
-              duration: const Duration(milliseconds: 300),
-            );
+            // Son ekrandaysa navigator ile başka bir ekrana yönlendir
+            if (pageIndex == demoData.length - 1) {
+              Navigator.pushReplacementNamed(context, "/sign_in");
+            } else {
+              _pageController.nextPage(
+                curve: Curves.ease,
+                duration: const Duration(milliseconds: 300),
+              );
+            }
           },
           style: ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(Colors.grey[300]),
             iconColor: const MaterialStatePropertyAll(Colors.black),
           ),
-          child: const Icon(Icons.arrow_forward),
+          icon: Icon(
+            // Eğer son ekrandaysa, ileri yerine tamam butonu göster
+            pageIndex == demoData.length - 1
+                ? Icons.check
+                : Icons.arrow_forward,
+          ),
         ),
       ),
     );
@@ -185,33 +203,25 @@ class NoktaGorunumu extends StatelessWidget {
 }
 
 class Onboard {
-  final String image, title, description;
+  final String image, onboardingImage;
 
   Onboard({
     required this.image,
-    required this.title,
-    required this.description,
+    required this.onboardingImage,
   });
 }
 
 final List<Onboard> demoData = [
   Onboard(
     image: "assets/onboarding_images/kale_1.jpeg",
-    title: "Life is short and the world is wide",
-    description:
-        "At Friends Tours and travel, we customize reliable and truthworthy educational tours to destinations all over the world",
+    onboardingImage: "assets/svg/onboarding-first.svg",
   ),
   Onboard(
-    image: "assets/onboarding_images/aphrodisias.jpeg",
-    title: "Life is short and the world is wide",
-    description:
-        "At Friends Tours and travel, we customize reliable and truthworthy educational tours to destinations all over the world",
-  ),
+      image: "assets/onboarding_images/aphrodisias.jpeg",
+      onboardingImage: "assets/svg/onboarding-second.svg"),
   Onboard(
     image: "assets/onboarding_images/yerebatan.jpeg",
-    title: "Life is short and the world is wide",
-    description:
-        "At Friends Tours and travel, we customize reliable and truthworthy educational tours to destinations all over the world",
+    onboardingImage: "assets/svg/onboarding-third.svg",
   ),
 ];
 
@@ -219,11 +229,10 @@ class OnboardContent extends StatelessWidget {
   const OnboardContent({
     super.key,
     required this.image,
-    required this.title,
-    required this.description,
+    required this.onboardingImage,
   });
 
-  final String image, title, description;
+  final String image, onboardingImage;
 
   @override
   Widget build(BuildContext context) {
@@ -232,39 +241,19 @@ class OnboardContent extends StatelessWidget {
         Image.asset(
           image,
           width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.5,
+          fit: BoxFit.cover,
         ),
-        const SizedBox(
-          height: 40,
+        const Spacer(
+          flex: 2,
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text(
-            title,
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
+        SvgPicture.asset(
+          onboardingImage,
+          semanticsLabel: 'Acme Logo',
+          height: 200,
+          width: 200,
         ),
-        const SizedBox(
-          height: 15,
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: SingleChildScrollView(
-              child: Text(
-                description,
-                textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(fontWeight: FontWeight.w300),
-              ),
-            ),
-          ),
-        ),
+        const Spacer(),
       ],
     );
   }

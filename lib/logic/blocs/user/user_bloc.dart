@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oua_flutter_eight/logic/repositories/auth_repository.dart';
 import 'package:oua_flutter_eight/models/user_model.dart';
 import '../../repositories/user_repository.dart';
 import 'user_event.dart';
@@ -10,6 +13,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<UserFetchEvent>(_onUserFetchEvent);
     on<UserUpdateEvent>(_onUserUpdateEvent);
     on<UserDeleteEvent>(_onUserDeleteEvent);
+    on<AddFavoriteLocationEvent>(_onAddFavoriteLocationEvent);
+    on<DeleteFavoriteLocationEvent>(_onDeleteFavoriteLocationEvent);
   }
 
   void _onUserFetchEvent(UserFetchEvent event, Emitter<UserState> emit) async {
@@ -45,6 +50,24 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   void _onUserDeleteEvent(UserDeleteEvent event, Emitter<UserState> emit) {
+    emit(UserInitialState());
+  }
+
+  Future<void> _onAddFavoriteLocationEvent(
+      AddFavoriteLocationEvent event, Emitter<UserState> emit) async {
+    emit(UserFetchLoadingState());
+    AuthRepository authRepository = AuthRepository();
+    final userId = authRepository.getUserId();
+    _userRepository.addFavoriteLocation(userId!, event.locationId);
+    emit(UserInitialState());
+  }
+
+  Future<void> _onDeleteFavoriteLocationEvent(
+      DeleteFavoriteLocationEvent event, Emitter<UserState> emit) async {
+    emit(UserFetchLoadingState());
+    AuthRepository authRepository = AuthRepository();
+    final userId = authRepository.getUserId();
+    _userRepository.deleteFavoriteLocation(userId!, event.locationId);
     emit(UserInitialState());
   }
 }

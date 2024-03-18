@@ -1,14 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:oua_flutter_eight/core/components/appbar/custom_app_bar.dart';
+import 'package:oua_flutter_eight/models/location_model.dart';
 
-class LokasyonScreen extends StatefulWidget {
-  const LokasyonScreen({super.key});
+class LocationDetailsPage extends StatefulWidget {
+  final LocationModel location;
+  const LocationDetailsPage({super.key, required this.location});
 
   @override
-  State<LokasyonScreen> createState() => _LokasyonScreenState();
+  State<LocationDetailsPage> createState() => _LocationDetailsPageState();
 }
 
-class _LokasyonScreenState extends State<LokasyonScreen>
+class _LocationDetailsPageState extends State<LocationDetailsPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -24,48 +28,30 @@ class _LokasyonScreenState extends State<LokasyonScreen>
     super.dispose();
   }
 
-  final List<String> resimListesi = [
-    'assets/lokasyon_detay_images/mardin/hirmiz_1.jpeg',
-    'assets/lokasyon_detay_images/mardin/kale.jpeg',
-    'assets/lokasyon_detay_images/mardin/mardinulu_1.jpg',
-    'assets/lokasyon_detay_images/mardin/mardinulu_2.jpg',
-  ];
-
-  final List<Lokasyon> lokasyonListesi = [
-    Lokasyon(
-        image: "assets/onboarding_images/kale_1.jpeg",
-        ad: "Mardin",
-        aciklama:
-            "Türkiye'nin güneydoğusunda yer alan Mardin, tarihi dokusuyla ünlü bir şehirdir. Taş evleri, dar sokakları ve manzarasıyla göz kamaştıran bir yapıya sahiptir. Ayrıca, farklı dinlerden ve kültürlerden izler taşıyan birçok dini ve tarihi yapıya ev sahipliği yapar.",
-        enlem: 1,
-        boylam: 1,
-        kategori: "Mounth")
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Lokasyon Detay Ekranı"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              //Favoriye ekleme işlemleri
-            },
-            icon: const Icon(FontAwesomeIcons.heart),
+      appBar: CustomAppBarWidget(
+        leading: IconButton(
+          icon: const Icon(
+            FontAwesomeIcons.arrowLeft,
+            size: 20,
           ),
-        ],
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Center(
         child: Column(
           children: [
             // görsel ve ikonların yer aldığı bölüm
-            LokasyonDetayEkraniUstKisim(lokasyonListesi: lokasyonListesi),
+            LokasyonDetayEkraniUstKisim(location: widget.location),
             //TabBar ve Şehir isminin bulunduğu alt bölüm
             LokasyonDetayEkraniAltKisim(
-                lokasyonListesi: lokasyonListesi,
+                location: widget.location,
                 tabController: _tabController,
-                resimListesi: resimListesi),
+                resimListesi: widget.location.locationGallery),
           ],
         ),
       ),
@@ -76,15 +62,15 @@ class _LokasyonScreenState extends State<LokasyonScreen>
 class LokasyonDetayEkraniUstKisim extends StatelessWidget {
   const LokasyonDetayEkraniUstKisim({
     super.key,
-    required this.lokasyonListesi,
+    required this.location,
   });
 
-  final List<Lokasyon> lokasyonListesi;
+  final LocationModel location;
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      lokasyonListesi[0].image,
+    return Image.network(
+      location.locationPhotoUrl,
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height / 3,
       fit: BoxFit.cover,
@@ -95,12 +81,12 @@ class LokasyonDetayEkraniUstKisim extends StatelessWidget {
 class LokasyonDetayEkraniAltKisim extends StatelessWidget {
   const LokasyonDetayEkraniAltKisim({
     super.key,
-    required this.lokasyonListesi,
     required TabController tabController,
     required this.resimListesi,
+    required this.location,
   }) : _tabController = tabController;
 
-  final List<Lokasyon> lokasyonListesi;
+  final LocationModel location;
   final TabController _tabController;
   final List<String> resimListesi;
 
@@ -118,7 +104,7 @@ class LokasyonDetayEkraniAltKisim extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  lokasyonListesi[0].ad,
+                  location.locationName,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -127,21 +113,21 @@ class LokasyonDetayEkraniAltKisim extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const Row(
+                Row(
                   children: [
-                    Icon(
+                    const Icon(
                       FontAwesomeIcons.locationDot,
                       size: 15,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(
-                      "Lokasyon",
-                      style: TextStyle(
+                      location.locationCity,
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Spacer(
+                    const Spacer(
                       flex: 15,
                     ),
                   ],
@@ -164,7 +150,7 @@ class LokasyonDetayEkraniAltKisim extends StatelessWidget {
             child: TabBarView(
               controller: _tabController,
               children: [
-                TabBarAboutEkrani(lokasyonListesi: lokasyonListesi),
+                TabBarAboutEkrani(location: location),
                 const TabBarReviewEkrani(),
                 TabBarPhotoEkrani(resimListesi: resimListesi),
                 const TabBarVideoEkrani(),
@@ -208,10 +194,15 @@ class TabBarPhotoEkrani extends StatelessWidget {
         child: PageView(
           scrollDirection: Axis.horizontal,
           children: resimListesi
-              .map((resimYolu) => Image.asset(
-                    resimYolu,
-                    fit: BoxFit.cover,
-                  ))
+              .map(
+                (resimYolu) => CachedNetworkImage(
+                  imageUrl: resimYolu,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) =>
+                      const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
+              )
               .toList(),
         ),
       ),
@@ -236,10 +227,10 @@ class TabBarReviewEkrani extends StatelessWidget {
 class TabBarAboutEkrani extends StatelessWidget {
   const TabBarAboutEkrani({
     super.key,
-    required this.lokasyonListesi,
+    required this.location,
   });
 
-  final List<Lokasyon> lokasyonListesi;
+  final LocationModel location;
 
   @override
   Widget build(BuildContext context) {
@@ -269,7 +260,7 @@ class TabBarAboutEkrani extends StatelessWidget {
                 top: 10,
                 bottom: ekranYuksekligi / 15),
             child: SingleChildScrollView(
-              child: Text(lokasyonListesi[0].aciklama),
+              child: Text(location.locationDescription),
             ),
           ),
         )

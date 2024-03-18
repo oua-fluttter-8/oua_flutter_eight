@@ -46,4 +46,32 @@ class UserRepository {
       throw Exception(e);
     }
   }
+
+  Future<void> addFavoriteLocation(String uid, String locationId) async {
+    try {
+      await collectionReference.doc(uid).update({
+        "favoriteLocations": FieldValue.arrayUnion([locationId])
+      });
+    } catch (e) {
+      if (e is FirebaseException) {
+        String errorMessage = FirestoreExceptionHelper.handleException(e.code);
+        throw Exception(errorMessage);
+      }
+      throw Exception(e);
+    }
+  }
+
+  Future<void> deleteFavoriteLocation(String uid, String locationId) async {
+    try {
+      await collectionReference.doc(uid).update({
+        "favoriteLocations": FieldValue.arrayRemove([locationId])
+      });
+    } catch (e) {
+      if (e is FirebaseException) {
+        String errorMessage = FirestoreExceptionHelper.handleException(e.code);
+        throw Exception(errorMessage);
+      }
+      throw Exception(e);
+    }
+  }
 }

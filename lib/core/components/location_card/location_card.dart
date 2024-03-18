@@ -1,98 +1,112 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class PlaceCardsWidget extends StatelessWidget {
-  const PlaceCardsWidget({super.key});
+  final String locationName;
+  final String locationImage;
+  final String locationCity;
+  final void Function()? onPressed;
+  final void Function()? deleteOnPressed;
+  const PlaceCardsWidget({
+    super.key,
+    required this.locationName,
+    required this.locationImage,
+    required this.locationCity,
+    required this.onPressed,
+    this.deleteOnPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-        child: Column(children: [
-          for (int i = 0; i < 10; i++)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
-              child: Container(
-                  width: 347,
-                  height: 250,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(25)),
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Column(children: [
+        Container(
+            width: 347,
+            height: 250,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(25)),
+            child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      alignment: Alignment.topCenter,
+                      width: 327,
+                      height: 130,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: CachedNetworkImage(
+                          width: 327,
+                          height: 130,
+                          imageUrl: locationImage,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 100,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            alignment: Alignment.topCenter,
-                            width: 327,
-                            height: 130,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20)),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: const Image(
-                                  width: 327,
-                                  height: 130,
-                                  fit: BoxFit.cover,
-                                  image: AssetImage(
-                                      "assets/png/location-dummy.png"),
-                                )),
-                          ),
-                          const SizedBox(
-                            height: 100,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Ranu Kumbolo",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w700),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      Row(children: [
-                                        Icon(
-                                          Icons.star,
-                                          color: Colors.red,
-                                        ),
-                                        Text(
-                                          "4.8",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w700),
-                                          textAlign: TextAlign.end,
-                                        ),
-                                      ])
-                                    ]),
-                                Row(children: [
-                                  Icon(
-                                    Icons.location_on_outlined,
-                                    color: Colors.red,
-                                  ),
-                                  Text(
-                                    "Lumanjang, Jawa timur",
-                                    style: TextStyle(
+                                Text(
+                                  locationName,
+                                  style: const TextStyle(
                                       fontSize: 15,
-                                      color: Colors.grey,
-                                    ),
-                                    textAlign: TextAlign.start,
-                                  ),
-                                ]),
-                              ],
+                                      fontWeight: FontWeight.w700),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Row(children: [
+                                  deleteOnPressed == null
+                                      ? IconButton(
+                                          onPressed: onPressed,
+                                          icon: const Icon(
+                                            FontAwesomeIcons.plus,
+                                            size: 30,
+                                          ),
+                                        )
+                                      : IconButton(
+                                          onPressed: deleteOnPressed,
+                                          icon: const Icon(
+                                            FontAwesomeIcons.trash,
+                                            color: Colors.red,
+                                            size: 30,
+                                          ),
+                                        ),
+                                ])
+                              ]),
+                          Row(children: [
+                            const Icon(
+                              Icons.location_on_outlined,
+                              color: Colors.red,
                             ),
-                          )
+                            Text(
+                              locationCity,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Colors.grey,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ]),
                         ],
-                      ))),
-            ),
-        ]),
-      ),
+                      ),
+                    )
+                  ],
+                ))),
+      ]),
     );
   }
 }

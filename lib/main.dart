@@ -37,17 +37,6 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: Scaffold(
-      //   body: Center(
-      //     child: Column(
-      //       mainAxisAlignment: MainAxisAlignment.center,
-      //       children: [
-      //         Image(image: AssetImage('assets')),
-      //         Text('Hello World'),
-      //       ],
-      //     ),
-      //   ),
-      // ),
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xfff6f6f6),
         fontFamily: 'Poppins',

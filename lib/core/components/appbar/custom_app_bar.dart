@@ -1,42 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AppBarWidget extends StatelessWidget {
-  const AppBarWidget({super.key});
+class CustomAppBarWidget extends StatelessWidget
+    implements PreferredSizeWidget {
+  const CustomAppBarWidget({super.key, this.leading, this.actions, this.title});
+
+  final Widget? leading;
+  final List<Widget>? actions;
+  final String? title;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const SizedBox(
-              width: 60), // Metin ile simge arasına boşluk bırakmak için
-          const Expanded(
-            child: Center(
-              child: Text("MEKAN",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 35,
-                      color: Colors.grey)),
-            ),
-          ),
-
-          InkWell(
-            onTap: () {},
-            child: Container(
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+    return AppBar(
+      elevation: 0,
+      scrolledUnderElevation: 0,
+      backgroundColor: Colors.transparent,
+      leading: leading,
+      centerTitle: true,
+      actions: [
+        IconButton(onPressed: () {}, icon: const Icon(FontAwesomeIcons.bell)),
+        const SizedBox(width: 10),
+      ],
+      title: title != null
+          ? Text(
+              title!,
+              style: const TextStyle(
+                color: Color(0xFF6F7789),
+                fontSize: 25,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+                height: 0,
               ),
-              child: const Icon(
-                Icons.notifications_none_rounded,
-                size: 35,
-              ),
+            )
+          : SvgPicture.asset(
+              "assets/svg/mekAN.svg",
+              semanticsLabel: 'Acme Logo',
+              height: 40,
+              width: 40,
             ),
-          ),
-        ],
-      ),
     );
   }
 }
