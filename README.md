@@ -2,7 +2,7 @@
 
 # MEKAN
 
-![MEKAN Logo](link_to_logo.png)
+![MEKAN Logo](assets/svg/mekAN.svg)
 
 Seyahat tutkunları, hazır olun: Yerel Gezginlerin vazgeçilmezi, Türkiye'nin kültürel ve tarihi zenginliklerini keşfetmek için yeni bir yol!
 
